@@ -1,0 +1,29 @@
+﻿<link rel="import" href="../polymer/polymer.html">
+<script>
+    window.ACAXLabs = window.ACAXLabs || {};
+    ACAXLabs.PaperRadioGroupValidatorBehavior = {
+        validatePRG: function () {
+            var valid = true;
+            this.removeErrorMessages();
+            var prgs = Polymer.dom(this.root).querySelectorAll("paper-radio-group");
+            prgs.forEach(prg => {
+                if (prg.selected === undefined && !prg.allowEmptySelection) {
+                    let err = document.createElement("div");
+
+                    err.classList.add("error");
+                    err.innerText = "Please select an option";
+                    Polymer.dom(prg.parentNode).appendChild(err);
+                    valid = false;
+                }
+            });
+            return valid;
+        },
+        removeErrorMessages: function () {
+            var errors = Polymer.dom(this.root).querySelectorAll(".error");
+            for (var i = 0; i < errors.length; i++) {
+                let parent = errors[i].parentNode;
+                Polymer.dom(parent).removeChild(errors[i]);
+            }
+        }
+    }
+</script>
